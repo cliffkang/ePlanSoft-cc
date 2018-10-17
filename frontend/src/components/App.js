@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import FileUplod from './FileUpload';
+import Homepage from './Homepage';
 import '../css/App.css';
 
 class App extends Component {
@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route to='/' component={FileUpload} />
+          <Route to='/' component={Homepage} />
         </Switch>
       </Router>
     );

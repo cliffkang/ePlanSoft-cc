@@ -1,5 +1,5 @@
-const { } = require('./');
+const { uploadFile } = require('./file');
 
 module.exports = {
-
+    uploadFile,
 }

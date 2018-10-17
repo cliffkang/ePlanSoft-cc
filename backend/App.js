@@ -6,7 +6,7 @@ const user = process.env.MLAB_USERNAME;
 const pass = process.env.MLAB_PASSWORD;
 
 mongoose
-    .connect(`mongodb://${user}:${pass}`,
+    .connect(`mongodb://${user}:${pass}@ds135233.mlab.com:35233/eplansoft`,
       { useNewUrlParser: true })
     .then(() => console.log('Mongo Connected'))
     .catch(error => {

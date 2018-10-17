@@ -1,5 +1,5 @@
-const { } = require('../controllers');
+const { uploadFile } = require('../controllers');
 
 module.exports = server => {
-    server.route('').verb();
+    server.route('/file').post(uploadFile);
 };
