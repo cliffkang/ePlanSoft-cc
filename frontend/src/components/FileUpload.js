@@ -32,31 +32,31 @@ class FileUpload extends Component {
             size: '',
             img: '',
             value: '',
+            message: 'Drop a file here to upload!',
         };
     };
 
     handleDrop = event => {
         event.preventDefault();
         const file = event.dataTransfer.items[0].getAsFile();
-        console.log('files', file);
         let value = file.type.slice(0, 5) === 'image' ? 'img' : 'value';
         if (window.FileReader) {
             const fr = new FileReader();
             fr.onload = (read) => {
-                this.setState({ [value]: read.target.result, file }, () => console.log('state', this.state));
+                this.setState({ [value]: read.target.result, file }, () => {
+                    if (this.state.value) this.setState({ message: 'File ready to be uploaded!' });
+                });
             };
             fr.readAsDataURL(file);
         }
     }
 
-    handleDragover = (e) => { 
-        e.preventDefault();
-    };
+    handleDragover = (e) => e.preventDefault();
 
     handleSubmit = () => {
         const base64file = this.state.value ? this.state.value : this.state.img;
         axios.post(`${ROOT_URL}/file`, { file: base64file })
-            .then(result => console.log('done'))
+            .then(() => this.setState({ img: '', message: 'File successfully uploaded!' }))
             .catch(err => console.log('error', err));
     }
 
@@ -67,10 +67,7 @@ class FileUpload extends Component {
                 <DragFile onDrop={this.handleDrop} onDragOver={this.handleDragover}>
                     {this.state.img ? 
                         <img src={this.state.img} alt='uploaded img'/> 
-                        : <h2>{this.state.value ? 
-                                'File ready to be uploaded' 
-                                : 'Drop a file here to upload!'
-                        }</h2>
+                        : <h2>{this.state.message}</h2>
                     }
                 </DragFile>
                 <FileInfo file={this.state.file}/>
